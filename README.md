@@ -8,7 +8,7 @@
 
 [![Framework: PyTorch](https://img.shields.io/badge/Framework-PyTorch-orange.svg)](https://pytorch.org/) [![arXiv](https://img.shields.io/badge/arXiv-2406.07544-A42C25?style=flat&logo=arXiv&logoColor=A42C25)](https://arxiv.org/) [![Project](https://img.shields.io/badge/Project-Page-green?style=flat&logo=Google%20chrome&logoColor=green)](https://yunzeman.github.io/situation3d/) [![YouTube](https://img.shields.io/badge/YouTube-Video-F83323?style=flat&logo=youtube&logoColor=F83323)](https://www.youtube.com/watch?v=IvjZXOs0Ozo) [![GitHub](https://img.shields.io/badge/GitHub-Code-black?style=flat&logo=github&logoColor=white)](https://github.com/YunzeMan/Situation3D) [![License](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
-This repository contains the official PyTorch implementation of the paper "Situational Awareness Matters in 3D Vision Language Reasoning" (CVPR 2024). The paper is available on [Arxiv](https://arxiv.org/abs/2406.07544). The project page is online at [here](https://yunzeman.github.io/situation3d/).
+This repository contains the official PyTorch implementation of the paper "Situational Awareness Matters in 3D Vision Language Reasoning" (CVPR 2024). The paper is available on [arXiv](https://arxiv.org/abs/2406.07544). The project page is online at [here](https://yunzeman.github.io/situation3d/).
 
 
 ## About
@@ -17,7 +17,7 @@ Previous methods perform direct 3D vision language reasoning without modeling th
 
 
 ## News
-* `06/11/2024`: Paper is available on Arxiv. Project page is online.
+* `06/11/2024`: Paper is available on arXiv. Project page is online.
 
 ## TODO
 - [ ] Situation Estimation
