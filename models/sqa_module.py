@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import os, sys
-sys.path.append(os.path.join(os.getcwd(), 'lib')) # HACK add the lib folder
+sys.path.append(os.path.join(os.getcwd(), 'lib'))
 from lib.config import CONF
 from models.mcan_sqa_module import MCAN_ED, AttFlat, LayerNorm, SA, SGA
 from models.sep_lang_module_bert import LangModule
@@ -46,9 +46,6 @@ def batch_rotation_vector_to_matrix(batch_rot_vec):
     # Construct the skew-symmetric matrices for each rotation vector
     zeros = torch.zeros(batch_rot_vec.shape[0], 1).to(batch_rot_vec.device)
 
-    # print('u.shape: ', u.shape)
-    # print('zeros.shape: ', zeros.shape)
-    # print('batch_rot_vec.shape: ', batch_rot_vec.shape)
     K = torch.cat([
         torch.cat([zeros, -u[:, 2:3], u[:, 1:2]], dim=1),
         torch.cat([u[:, 2:3], zeros, -u[:, 0:1]], dim=1),
@@ -327,15 +324,14 @@ class SIG3D(nn.Module):
         if q_mask.dim() == 2:
             q_mask = q_mask.unsqueeze(1).unsqueeze(2) # batch, 1, 1, num_words(16)
         
-        # --------- Add GT situational PE to the scene_feat ---------
+        # --------- Add situational PE to the scene_feat ---------
         gt_translation = data_dict["auxiliary_task"][:, :3]     # [32, 3]
         gt_rotation = data_dict["auxiliary_task"][:, 3:]        # [32, 4]
 
-        # calculate among scene_positions, the distance to gt_translation. Only compare with the first 2 dimensions
+        # calculate among scene_positions. Only compare with the first 2 dimensions
         gt_translation = gt_translation.unsqueeze(1)[:, :, :2] # [32, 1, 2]
         distance = torch.norm(scene_positions - gt_translation, dim=2) # [32, 256]
 
-        # calculate weights for each position, the closer to the gt_translation, the higher the weight. Use a Gaussian kernel and make the weight sum to 1.  
         weights = torch.exp(-distance**2 / (2 * 0.16**2)) # [32, 256]
         weights = weights / weights.sum(dim=1, keepdim=True) # [32, 256]
         # save the weights as cross-entropy loss ground truth
@@ -364,12 +360,6 @@ class SIG3D(nn.Module):
         data_dict["pred_pos_likelihood"] = pos_likelihood.squeeze(-1)  # [32, 256]
         data_dict["pred_rotation"] = rotation_pred  # [32, 256, 6]
 
-        #######################################
-        #                                     #
-        #          PROPOSAL MATCHING          #
-        #                                     #
-        #######################################
-
         s_feat, data_dict["satt"] = self.attflat_s(
                 s_feat,
                 s_mask
@@ -390,18 +380,12 @@ class SIG3D(nn.Module):
         else:
             fuse_feat = torch.cat((s_feat, q_feat), dim=1)  
 
-        assert CONF.TRAIN.NO3D is False
         if '__class__' in self.situation_loss_tag:
             data_dict["aux_scores"] = self.aux_cls(scene_feat)  # torch.Size([32, 256, 5]) / torch.Size([32, 256, 7])
         else:
             temp = torch.cat((s_feat, scene_feat), dim=1) # torch.Size([32, 1024])
             data_dict["aux_scores"] = self.aux_reg(temp)  # torch.Size([32, 7]) / torch.Size([32, 5])
         
-        #######################################
-        #                                     #
-        #          QUESTION ANSWERING         #
-        #                                     #
-        #######################################
         if self.use_answer:
             data_dict["answer_scores"] = self.answer_cls(fuse_feat) # batch_size, num_answers [32, 707]
 
