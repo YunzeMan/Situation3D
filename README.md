@@ -16,14 +16,16 @@ This repository contains the official PyTorch implementation of the paper "Situa
 Previous methods perform direct 3D vision language reasoning without modeling the situation of an embodied agent in the 3D environment. Our method, SIG3D, grounds the situational description in the 3D space, and then re-encodes the visual tokens from the agent's intended perspective before vision-language fusion, resulting in a more comprehensive and generalized 3D vision language (3DVL) representation and reasoning pipeline.
 
 
-## News
-* `06/11/2024`: Paper is available on arXiv. Project page is online.
+## Environmet Setup and Dataset Preparation
+Please install the required packages and dependencies according to the requirements.txt file.
 
-## TODO
-- [ ] Situation Estimation
-- [ ] SQA3D-based VQA
-- [ ] 3DLLM-based VQA
-- [ ] Evaluation and Visualization
+In addition,
+- in order to use the SQA3D dataset, please follow [this repo](https://github.com/SilongYong/SQA3D) to download the dataset and necessary toolsets.
+- in order to use the ScanQA dataset, please follow [this repo](https://github.com/ATR-DBI/ScanQA) to download the dataset and necessary toolsets.
+- in order to use the 3D-LLM backbone model, please follow [this repo](https://github.com/UMass-Foundation-Model/3D-LLM) to install necessary dependencies and download the pre-trained model.
+
+Finally, please download the ScanNet dataset from the official website and follow the instructions [here](https://github.com/pengsongyou/openscene/blob/main/scripts/preprocess) to preprocess the ScanNet dataset and get RGB video frames and point clouds for each scannet scene.
+
 
 
 
