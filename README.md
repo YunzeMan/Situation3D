@@ -17,7 +17,7 @@ Previous methods perform direct 3D vision language reasoning without modeling th
 
 
 ## Environmet Setup and Dataset Preparation
-Please install the required packages and dependencies according to the requirements.txt file.
+Please install the required packages and dependencies according to the environment.yml.
 
 In addition,
 - in order to use the SQA3D dataset, please follow [this repo](https://github.com/SilongYong/SQA3D) to download the dataset and necessary toolsets.
