@@ -26,6 +26,8 @@ In addition,
 
 Finally, please download the ScanNet dataset from the official website and follow the instructions [here](https://github.com/pengsongyou/openscene/blob/main/scripts/preprocess) to preprocess the ScanNet dataset and get RGB video frames and point clouds for each scannet scene.
 
+#### The latest code implementation and models will be out recently. Please stay tuned.
+
 
 
 
