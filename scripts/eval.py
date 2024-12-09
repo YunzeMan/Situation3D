@@ -23,7 +23,7 @@ from lib.config import CONF
 from models.sqa_module import SIG3D
 from collections import OrderedDict
 import transformers
-from utils.visualization import visualize_scene_test, visualize_scene_test_good_res_video
+from utils.visualization import visualize_scene_test
 import MinkowskiEngine as ME
 from utils import segmentation_util
 import tqdm 
@@ -311,8 +311,7 @@ def test(args, SQA_TRAIN, SQA_VAL, SQA_TEST, path, answer_counter_list):
                     activation = feat.norm(dim=-1).numpy()
                     activation = (activation - activation.min()) / (activation.max() - activation.min())
 
-                    # visualize_scene_test(data_dict, scene_id, args.situation_loss_tag, visualization_root, count, activation, feat_name, points_position.clone(), VIS_CONF, render)
-                    visualize_scene_test_good_res_video(data_dict, scene_id, args.situation_loss_tag, visualization_root, count, activation, feat_name, points_position.clone(), VIS_CONF, render)
+                    visualize_scene_test(data_dict, scene_id, args.situation_loss_tag, visualization_root, count, activation, feat_name, points_position.clone(), VIS_CONF, render)
             
             # get QA prediction
             pred_answer = torch.argmax(data_dict["answer_scores"], 1).cpu().detach().item()
@@ -340,7 +339,7 @@ if __name__ == "__main__":
     # os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     project_name = "SQA"
     SQA_TRAIN = json.load(open(os.path.join(CONF.PATH.SQA, project_name + "_train.json")))
-    SQA_VAL = json.load(open(os.path.join(CONF.PATH.SQA, project_name + "_test.json")))
+    SQA_VAL = json.load(open(os.path.join(CONF.PATH.SQA, project_name + "_val.json")))
     SQA_TEST = json.load(open(os.path.join(CONF.PATH.SQA, project_name + "_test.json")))
     answer_counter_list = json.load(open(os.path.join(CONF.PATH.SQA, "answer_counter.json")))
     torch.cuda.set_device('cuda:{}'.format(args.gpu))
